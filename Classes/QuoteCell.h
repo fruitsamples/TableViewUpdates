@@ -4,7 +4,7 @@
  Abstract: Table view cell to display information about a news item.
  The cell is configured in QuoteCell.xib.
  
-  Version: 1.1
+  Version: 2.0
  
  Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple
  Inc. ("Apple") in consideration of your agreement to the following
@@ -44,20 +44,20 @@
  STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
  POSSIBILITY OF SUCH DAMAGE.
  
- Copyright (C) 2010 Apple Inc. All Rights Reserved.
+ Copyright (C) 2011 Apple Inc. All Rights Reserved.
  
  */
 
 @class HighlightingTextView;
 @class Quotation;
 
-@interface QuoteCell : UITableViewCell {
-}
 
-@property (nonatomic, retain) IBOutlet UILabel *characterLabel;
-@property (nonatomic, retain) IBOutlet UILabel *actAndSceneLabel;
-@property (nonatomic, retain) IBOutlet HighlightingTextView *quotationTextView;
+@interface QuoteCell : UITableViewCell 
 
-@property (nonatomic, retain) Quotation *quotation;
+@property (nonatomic, weak) IBOutlet UILabel *characterLabel;
+@property (nonatomic, weak) IBOutlet UILabel *actAndSceneLabel;
+@property (nonatomic, weak) IBOutlet HighlightingTextView *quotationTextView;
+
+@property (nonatomic, strong) Quotation *quotation;
 
 @end

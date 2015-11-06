@@ -4,7 +4,7 @@
  Abstract: Table view cell to display information about a news item.
  The cell is configured in QuoteCell.xib.
  
-  Version: 1.1
+  Version: 2.0
  
  Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple
  Inc. ("Apple") in consideration of your agreement to the following
@@ -44,7 +44,7 @@
  STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
  POSSIBILITY OF SUCH DAMAGE.
  
- Copyright (C) 2010 Apple Inc. All Rights Reserved.
+ Copyright (C) 2011 Apple Inc. All Rights Reserved.
  
  */
 
@@ -60,8 +60,7 @@
 - (void)setQuotation:(Quotation *)newQuotation {
  
     if (quotation != newQuotation) {
-        [quotation release];
-        quotation = [newQuotation retain];
+        quotation = newQuotation;
         
         characterLabel.text = quotation.character;
         actAndSceneLabel.text = [NSString stringWithFormat:@"Act %d, Scene %d", quotation.act, quotation.scene];
@@ -70,14 +69,6 @@
 }
 
 
-- (void)dealloc {
-    
-    [characterLabel release];
-    [quotationTextView release];
-    [actAndSceneLabel release];
-    [quotation release];
-    [super dealloc];   
-}
 
 @end
 

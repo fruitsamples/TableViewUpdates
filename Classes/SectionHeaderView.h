@@ -3,7 +3,7 @@
      File: SectionHeaderView.h
  Abstract: A view to display a section header, and support opening and closing a section.
  
-  Version: 1.1
+  Version: 2.0
  
  Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple
  Inc. ("Apple") in consideration of your agreement to the following
@@ -43,7 +43,7 @@
  STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
  POSSIBILITY OF SUCH DAMAGE.
  
- Copyright (C) 2010 Apple Inc. All Rights Reserved.
+ Copyright (C) 2011 Apple Inc. All Rights Reserved.
  
  */
 
@@ -52,15 +52,14 @@
 @protocol SectionHeaderViewDelegate;
 
 
-@interface SectionHeaderView : UIView {
-}
+@interface SectionHeaderView : UIView 
 
-@property (nonatomic, retain) UILabel *titleLabel;
-@property (nonatomic, retain) UIButton *disclosureButton;
+@property (nonatomic, weak) UILabel *titleLabel;
+@property (nonatomic, weak) UIButton *disclosureButton;
 @property (nonatomic, assign) NSInteger section;
-@property (nonatomic, assign) id <SectionHeaderViewDelegate> delegate;
+@property (nonatomic, weak) id <SectionHeaderViewDelegate> delegate;
 
--(id)initWithFrame:(CGRect)frame title:(NSString*)title section:(NSInteger)sectionNumber delegate:(id <SectionHeaderViewDelegate>)aDelegate;
+-(id)initWithFrame:(CGRect)frame title:(NSString*)title section:(NSInteger)sectionNumber delegate:(id <SectionHeaderViewDelegate>)delegate;
 -(void)toggleOpenWithUserAction:(BOOL)userAction;
 
 @end

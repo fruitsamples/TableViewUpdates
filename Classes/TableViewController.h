@@ -4,7 +4,7 @@
  Abstract: Table view controller to manage display of quotations from various plays.
  The controller supports opening and closing of sections. To do this it maintains information about each section using an array of SectionInfo objects.
  
-  Version: 1.1
+  Version: 2.0
  
  Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple
  Inc. ("Apple") in consideration of your agreement to the following
@@ -44,7 +44,7 @@
  STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
  POSSIBILITY OF SUCH DAMAGE.
  
- Copyright (C) 2010 Apple Inc. All Rights Reserved.
+ Copyright (C) 2011 Apple Inc. All Rights Reserved.
  
  */
 
@@ -54,11 +54,10 @@
 
 @class QuoteCell;
 
-@interface TableViewController : UITableViewController <MFMailComposeViewControllerDelegate, SectionHeaderViewDelegate> {
-}
+@interface TableViewController : UITableViewController <MFMailComposeViewControllerDelegate, SectionHeaderViewDelegate> 
 
-@property (nonatomic, retain) NSArray* plays;
-@property (nonatomic, assign) IBOutlet QuoteCell *quoteCell;
+@property (nonatomic, strong) NSArray* plays;
+@property (nonatomic, weak) IBOutlet QuoteCell *quoteCell;
 
 @end
 

@@ -3,7 +3,7 @@
      File: TVAnimationsGesturesAppDelegate.m
  Abstract: Application delegate: Creates and displays the main table view controller.
  
-  Version: 1.1
+  Version: 2.0
  
  Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple
  Inc. ("Apple") in consideration of your agreement to the following
@@ -43,7 +43,7 @@
  STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
  POSSIBILITY OF SUCH DAMAGE.
  
- Copyright (C) 2010 Apple Inc. All Rights Reserved.
+ Copyright (C) 2011 Apple Inc. All Rights Reserved.
  
  */
 
@@ -56,7 +56,7 @@
 
 @interface TVAnimationsGesturesAppDelegate ()
 
-@property (nonatomic, retain) NSArray *plays;
+@property (nonatomic, strong) NSArray *plays;
 - (void)setUpPlaysArray;
 
 @end
@@ -65,7 +65,7 @@
 
 @implementation TVAnimationsGesturesAppDelegate
 
-@synthesize tableViewController=tableViewController_, window=window_, plays=plays_;
+@synthesize window=window_, plays=plays_;
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
@@ -75,14 +75,8 @@
      */
     [self setUpPlaysArray];
     
-    TableViewController* aTableViewController = [[TableViewController alloc] initWithStyle:UITableViewStylePlain];
-    aTableViewController.plays = self.plays;
-    self.tableViewController = aTableViewController;
-    [aTableViewController release];
-    
-    // Stamdard window display.
-    [self.window addSubview:aTableViewController.view];
-    [self.window makeKeyAndVisible];
+    TableViewController *tableViewController = (TableViewController *)[self.window rootViewController];
+    tableViewController.plays = self.plays;
     
     return YES;
 }
@@ -108,25 +102,16 @@
             [quotation setValuesForKeysWithDictionary:quotationDictionary];
             
             [quotations addObject:quotation];
-            [quotation release];
         }
         play.quotations = quotations;
         
         [playsArray addObject:play];
-        [play release];
     }
     
     self.plays = playsArray;
-    [playDictionariesArray release];
 }
 
 
-- (void)dealloc {
-    
-    [tableViewController_ release];
-    [window_ release];
-    [super dealloc];
-}
 
 
 @end

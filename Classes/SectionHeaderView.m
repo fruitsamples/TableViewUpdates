@@ -3,7 +3,7 @@
      File: SectionHeaderView.m
  Abstract: A view to display a section header, and support opening and closing a section.
  
-  Version: 1.1
+  Version: 2.0
  
  Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple
  Inc. ("Apple") in consideration of your agreement to the following
@@ -43,7 +43,7 @@
  STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
  POSSIBILITY OF SUCH DAMAGE.
  
- Copyright (C) 2010 Apple Inc. All Rights Reserved.
+ Copyright (C) 2011 Apple Inc. All Rights Reserved.
  
  */
 
@@ -53,7 +53,7 @@
 @implementation SectionHeaderView
 
 
-@synthesize titleLabel, disclosureButton, delegate, section;
+@synthesize titleLabel=_titleLabel, disclosureButton=_disclosureButton, delegate=_delegate, section=_section;
 
 
 + (Class)layerClass {
@@ -62,7 +62,7 @@
 }
 
 
--(id)initWithFrame:(CGRect)frame title:(NSString*)title section:(NSInteger)sectionNumber delegate:(id <SectionHeaderViewDelegate>)aDelegate {
+-(id)initWithFrame:(CGRect)frame title:(NSString*)title section:(NSInteger)sectionNumber delegate:(id <SectionHeaderViewDelegate>)delegate {
     
     self = [super initWithFrame:frame];
     
@@ -71,33 +71,35 @@
         // Set up the tap gesture recognizer.
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toggleOpen:)];
         [self addGestureRecognizer:tapGesture];
-        [tapGesture release];
 
-        delegate = aDelegate;        
+        _delegate = delegate;        
         self.userInteractionEnabled = YES;
         
         
         // Create and configure the title label.
-        section = sectionNumber;
+        _section = sectionNumber;
         CGRect titleLabelFrame = self.bounds;
         titleLabelFrame.origin.x += 35.0;
         titleLabelFrame.size.width -= 35.0;
         CGRectInset(titleLabelFrame, 0.0, 5.0);
-        titleLabel = [[UILabel alloc] initWithFrame:titleLabelFrame];
-        titleLabel.text = title;
-        titleLabel.font = [UIFont boldSystemFontOfSize:17.0];
-        titleLabel.textColor = [UIColor whiteColor];
-        titleLabel.backgroundColor = [UIColor clearColor];
-        [self addSubview:titleLabel];
+        UILabel *label = [[UILabel alloc] initWithFrame:titleLabelFrame];
+        label.text = title;
+        label.font = [UIFont boldSystemFontOfSize:17.0];
+        label.textColor = [UIColor whiteColor];
+        label.backgroundColor = [UIColor clearColor];
+        [self addSubview:label];
+        _titleLabel = label;
         
         
         // Create and configure the disclosure button.
-        disclosureButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
-        disclosureButton.frame = CGRectMake(0.0, 5.0, 35.0, 35.0);
-        [disclosureButton setImage:[UIImage imageNamed:@"carat.png"] forState:UIControlStateNormal];
-        [disclosureButton setImage:[UIImage imageNamed:@"carat-open.png"] forState:UIControlStateSelected];
-        [disclosureButton addTarget:self action:@selector(toggleOpen:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:disclosureButton];
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        button.frame = CGRectMake(0.0, 5.0, 35.0, 35.0);
+        [button setImage:[UIImage imageNamed:@"carat.png"] forState:UIControlStateNormal];
+        [button setImage:[UIImage imageNamed:@"carat-open.png"] forState:UIControlStateSelected];
+        [button addTarget:self action:@selector(toggleOpen:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:button];
+        _disclosureButton = button;
+        
         
         // Set the colors for the gradient layer.
         static NSMutableArray *colors = nil;
@@ -113,7 +115,6 @@
         }
         [(CAGradientLayer *)self.layer setColors:colors];
         [(CAGradientLayer *)self.layer setLocations:[NSArray arrayWithObjects:[NSNumber numberWithFloat:0.0], [NSNumber numberWithFloat:0.48], [NSNumber numberWithFloat:1.0], nil]];
-        
     }
     
     return self;
@@ -129,30 +130,24 @@
 -(void)toggleOpenWithUserAction:(BOOL)userAction {
     
     // Toggle the disclosure button state.
-    disclosureButton.selected = !disclosureButton.selected;
+    self.disclosureButton.selected = !self.disclosureButton.selected;
     
     // If this was a user action, send the delegate the appropriate message.
     if (userAction) {
-        if (disclosureButton.selected) {
-            if ([delegate respondsToSelector:@selector(sectionHeaderView:sectionOpened:)]) {
-                [delegate sectionHeaderView:self sectionOpened:section];
+        if (self.disclosureButton.selected) {
+            if ([self.delegate respondsToSelector:@selector(sectionHeaderView:sectionOpened:)]) {
+                [self.delegate sectionHeaderView:self sectionOpened:self.section];
             }
         }
         else {
-            if ([delegate respondsToSelector:@selector(sectionHeaderView:sectionClosed:)]) {
-                [delegate sectionHeaderView:self sectionClosed:section];
+            if ([self.delegate respondsToSelector:@selector(sectionHeaderView:sectionClosed:)]) {
+                [self.delegate sectionHeaderView:self sectionClosed:self.section];
             }
         }
     }
 }
 
 
-- (void)dealloc {
-    
-    [titleLabel release];
-    [disclosureButton release];
-    [super dealloc];
-}
 
 
 @end

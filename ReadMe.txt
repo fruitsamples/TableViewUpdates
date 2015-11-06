@@ -9,15 +9,20 @@ Demonstrates how you can use animated updates to open and close sections of a ta
 * A UIPinchGestureRecognizer to allow dynamic changes to the height of table view rows; and
 * A UILongPressGestureRecognizer to allow press-and-hold on table view cells to initiate an email of the quotation.
 
+================================================================================
+MEMORY MANAGEMENT STYLE:
+
+Automatic Reference Counting (ARC).
+
 ===========================================================================
 BUILD REQUIREMENTS:
 
-Xcode 3.2.3 or later
+Xcode 4.2 or later, OS X v10.7 or later, iOS 5 or later.
 
 ===========================================================================
 RUNTIME REQUIREMENTS:
 
-Mac OS X v10.6.4 or later/iPhone OS 4.0.2 or later
+OS X v10.7 or later, iOS 5 or later.
 
 ===========================================================================
 PACKAGING LIST:
@@ -40,7 +45,7 @@ A view to display a section header, and support opening and closing a section.
 
 
 QuoteCell.{h,m}
-A table view cell to display information about a quotation. The cell is configured in QuoteCell.xib.
+A table view cell to display information about a quotation.
  
 
 TVAnimationsGesturesAppDelegate.{h,m}
@@ -70,8 +75,8 @@ Each quotation is a dictionary with the following keys:
 ===========================================================================
 CHANGES FROM PREVIOUS VERSIONS:
 
-Version 1.0
-- WWDC 2010 version.
+Version 3.0
+- Updated for iOS 5 to use ARC and storyboards.
 
 Version 1.1
 - First public version.
@@ -80,5 +85,8 @@ Uses SectionInfo class instead of struct.
 More comments.
 Minor user interface changes.
 
+Version 1.0
+- WWDC 2010 version.
+
 ===========================================================================
-Copyright (C) 2010 Apple Inc. All rights reserved.
+Copyright (C) 2010-2011 Apple Inc. All rights reserved.

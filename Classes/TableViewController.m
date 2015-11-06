@@ -4,7 +4,7 @@
  Abstract: Table view controller to manage display of quotations from various plays.
  The controller supports opening and closing of sections. To do this it maintains information about each section using an array of SectionInfo objects.
  
-  Version: 1.1
+  Version: 2.0
  
  Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple
  Inc. ("Apple") in consideration of your agreement to the following
@@ -44,7 +44,7 @@
  STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
  POSSIBILITY OF SUCH DAMAGE.
  
- Copyright (C) 2010 Apple Inc. All Rights Reserved.
+ Copyright (C) 2011 Apple Inc. All Rights Reserved.
  
  */
 
@@ -61,17 +61,12 @@
 #pragma mark EmailMenuItem
 
 
-@interface EmailMenuItem : UIMenuItem {
-}
-@property (nonatomic, retain) NSIndexPath* indexPath;
+@interface EmailMenuItem : UIMenuItem 
+@property (nonatomic, strong) NSIndexPath* indexPath;
 @end
 
 @implementation EmailMenuItem
 @synthesize indexPath;
-- (void)dealloc {
-    [indexPath release];
-    [super dealloc];
-}
 @end
 
 
@@ -83,8 +78,8 @@
 // Private TableViewController properties and methods.
 @interface TableViewController ()
 
-@property (nonatomic, retain) NSMutableArray* sectionInfoArray;
-@property (nonatomic, retain) NSIndexPath* pinchedIndexPath;
+@property (nonatomic, strong) NSMutableArray* sectionInfoArray;
+@property (nonatomic, strong) NSIndexPath* pinchedIndexPath;
 @property (nonatomic, assign) NSInteger openSectionIndex;
 @property (nonatomic, assign) CGFloat initialPinchHeight;
 
@@ -124,7 +119,6 @@
     // Add a pinch gesture recognizer to the table view.
 	UIPinchGestureRecognizer* pinchRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinch:)];
 	[self.tableView addGestureRecognizer:pinchRecognizer];
-	[pinchRecognizer release]; 
     
     // Set up default values.
     self.tableView.sectionHeaderHeight = HEADER_HEIGHT;
@@ -161,11 +155,9 @@
 			}
 			
 			[infoArray addObject:sectionInfo];
-			[sectionInfo release];
 		}
 		
 		self.sectionInfoArray = infoArray;
-		[infoArray release];
 	}
 	
 }
@@ -213,7 +205,6 @@
         if ([MFMailComposeViewController canSendMail]) {
             UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
             [cell addGestureRecognizer:longPressRecognizer];        
-            [longPressRecognizer release];
         }
 		else {
 			NSLog(@"Mail not available");
@@ -235,7 +226,7 @@
 	SectionInfo *sectionInfo = [self.sectionInfoArray objectAtIndex:section];
     if (!sectionInfo.headerView) {
 		NSString *playName = sectionInfo.play.name;
-        sectionInfo.headerView = [[[SectionHeaderView alloc] initWithFrame:CGRectMake(0.0, 0.0, self.tableView.bounds.size.width, HEADER_HEIGHT) title:playName section:section delegate:self] autorelease];
+        sectionInfo.headerView = [[SectionHeaderView alloc] initWithFrame:CGRectMake(0.0, 0.0, self.tableView.bounds.size.width, HEADER_HEIGHT) title:playName section:section delegate:self];
     }
     
     return sectionInfo.headerView;
@@ -308,8 +299,6 @@
     [self.tableView endUpdates];
     self.openSectionIndex = sectionOpened;
     
-    [indexPathsToInsert release];
-    [indexPathsToDelete release];
 }
 
 
@@ -329,7 +318,6 @@
             [indexPathsToDelete addObject:[NSIndexPath indexPathForRow:i inSection:sectionClosed]];
         }
         [self.tableView deleteRowsAtIndexPaths:indexPathsToDelete withRowAnimation:UITableViewRowAnimationTop];
-        [indexPathsToDelete release];
     }
     self.openSectionIndex = NSNotFound;
 }
@@ -411,7 +399,6 @@
             EmailMenuItem *menuItem = [[EmailMenuItem alloc] initWithTitle:@"Email" action:@selector(emailMenuButtonPressed:)];
             menuItem.indexPath = pressedIndexPath;
             menuController.menuItems = [NSArray arrayWithObject:menuItem];
-            [menuItem release];
             [menuController setTargetRect:[self.tableView rectForRowAtIndexPath:pressedIndexPath] inView:self.tableView];
             [menuController setMenuVisible:YES animated:YES];
         }
@@ -449,13 +436,5 @@
 
 #pragma mark Memory management
 
--(void)dealloc {
-    
-    [plays_ release];
-    [sectionInfoArray_ release];
-    [pinchedIndexPath_ release];   
-    [super dealloc];
-    
-}
 
 @end

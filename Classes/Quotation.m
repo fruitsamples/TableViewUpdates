@@ -3,7 +3,7 @@
      File: Quotation.m
  Abstract: A simple model class to represent a quotation with information about the character, and the act and scene in which the quotation was made.
  
-  Version: 1.1
+  Version: 2.0
  
  Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple
  Inc. ("Apple") in consideration of your agreement to the following
@@ -43,7 +43,7 @@
  STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
  POSSIBILITY OF SUCH DAMAGE.
  
- Copyright (C) 2010 Apple Inc. All Rights Reserved.
+ Copyright (C) 2011 Apple Inc. All Rights Reserved.
  
  */
 
@@ -54,10 +54,5 @@
 
 @synthesize character, act, scene, quotation;
 
-- (void)dealloc {
-    [character release];
-    [quotation release];
-    [super dealloc];
-}
 
 @end

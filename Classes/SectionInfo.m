@@ -7,7 +7,7 @@
  * The model objects for the section -- in this case, the dictionary containing the quotations for a single play
  * The height of each row in the section
  
-  Version: 1.1
+  Version: 2.0
  
  Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple
  Inc. ("Apple") in consideration of your agreement to the following
@@ -47,7 +47,7 @@
  STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
  POSSIBILITY OF SUCH DAMAGE.
  
- Copyright (C) 2010 Apple Inc. All Rights Reserved.
+ Copyright (C) 2011 Apple Inc. All Rights Reserved.
  
  */
 
@@ -72,10 +72,6 @@
 
 - (NSUInteger)countOfRowHeights {
 	return [rowHeights count];
-}
-
-- (void)getRowHeights:(id *)buffer range:(NSRange)inRange {
-	[rowHeights getObjects:buffer range:inRange];
 }
 
 - (id)objectInRowHeightsAtIndex:(NSUInteger)idx {
@@ -107,11 +103,6 @@
 }
 
 
-- (void)dealloc {
-    [play release];
-	[rowHeights release];
-	[super dealloc];
-}
 
 
 @end

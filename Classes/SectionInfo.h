@@ -7,7 +7,7 @@
  * The model objects for the section -- in this case, the dictionary containing the quotations for a single play
  * The height of each row in the section
  
-  Version: 1.1
+  Version: 2.0
  
  Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple
  Inc. ("Apple") in consideration of your agreement to the following
@@ -47,7 +47,7 @@
  STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
  POSSIBILITY OF SUCH DAMAGE.
  
- Copyright (C) 2010 Apple Inc. All Rights Reserved.
+ Copyright (C) 2011 Apple Inc. All Rights Reserved.
  
  */
 
@@ -56,22 +56,20 @@
 @class SectionHeaderView;
 @class Play;
 
-@interface SectionInfo : NSObject {
-	
-}
+
+@interface SectionInfo : NSObject 
 
 @property (assign) BOOL open;
-@property (retain) Play* play;
-@property (retain) SectionHeaderView* headerView;
+@property (strong) Play* play;
+@property (strong) SectionHeaderView* headerView;
 
-@property (nonatomic,retain,readonly) NSMutableArray *rowHeights;
+@property (nonatomic,strong,readonly) NSMutableArray *rowHeights;
 
 - (NSUInteger)countOfRowHeights;
 - (id)objectInRowHeightsAtIndex:(NSUInteger)idx;
 - (void)insertObject:(id)anObject inRowHeightsAtIndex:(NSUInteger)idx;
 - (void)removeObjectFromRowHeightsAtIndex:(NSUInteger)idx;
 - (void)replaceObjectInRowHeightsAtIndex:(NSUInteger)idx withObject:(id)anObject;
-- (void)getRowHeights:(id *)buffer range:(NSRange)inRange;
 - (void)insertRowHeights:(NSArray *)rowHeightArray atIndexes:(NSIndexSet *)indexes;
 - (void)removeRowHeightsAtIndexes:(NSIndexSet *)indexes;
 - (void)replaceRowHeightsAtIndexes:(NSIndexSet *)indexes withRowHeights:(NSArray *)rowHeightArray;
